@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Piano Player",
+  "version": "1.0.0",
+  "description": "Generate and play seeded piano pieces on onlinepianist.com's virtual piano.",
+  "permissions": ["scripting"],
+  "host_permissions": ["https://www.onlinepianist.com/*", "https://onlinepianist.com/*"],
+  "action": {
+    "default_title": "Piano Player",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.onlinepianist.com/*", "https://onlinepianist.com/*"],
+      "js": ["install-keymap.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.onlinepianist.com/*", "https://onlinepianist.com/*"],
+      "js": ["chopin-generator.js"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    }
+  ]
+}
