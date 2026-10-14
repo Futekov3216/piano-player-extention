@@ -41,7 +41,7 @@ The player works on whichever tab is showing in your main Chrome window. Its but
 | **Go to virtual piano** | Opens the piano page in the current tab. Disabled when you're already on it. |
 | **×** (top right) | Closes the player window. Clicking the extension icon while it's open brings it to the front instead of opening a second one. |
 | **Reload page** | Only appears when the page needs a reload before it can play (see [Troubleshooting](#troubleshooting)). |
-| **Played seeds** | Expands a list of the seeds you've played, newest first, with each one's style, key and length. Click a seed to play it again. **Clear history** empties the list. |
+| **Played seeds** | Expands a list of the seeds you've played, newest first, with each one's style, key and length. Each seed is saved once: playing it again doesn't add or move it. Click a seed to play it again, or its **×** to remove it. **Clear history** empties the list. |
 
 After you press Play, the player shows the piece's seed, style, key, tempo, length, number of notes and how it ends.
 

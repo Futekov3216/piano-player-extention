@@ -87,7 +87,8 @@ function saveHistory(list) {
 }
 
 function addToHistory(info) {
-  const list = loadHistory().filter(h => h.seed !== info.seed);   // a replayed seed moves to the top
+  const list = loadHistory();
+  if (list.some(h => h.seed === info.seed)) return;               // already saved: leave the list as it is
   list.unshift({ seed: info.seed, style: info.style, key: info.key, length: info.length, at: Date.now() });
   saveHistory(list.slice(0, HISTORY_MAX));
   renderHistory();
@@ -110,7 +111,14 @@ function renderHistory() {
     seed.className = 'seed'; seed.textContent = h.seed;
     meta.className = 'meta'; meta.textContent = `${h.style}, ${h.key} · ${h.length}`;
     li.title = `Played ${new Date(h.at).toLocaleString()}. Click to play again.`;
-    li.append(seed, meta);
+    const del = document.createElement('button');
+    del.className = 'delete'; del.textContent = '×'; del.title = 'Remove from history';
+    del.addEventListener('click', e => {
+      e.stopPropagation();                                        // don't also play the seed
+      saveHistory(loadHistory().filter(x => x.seed !== h.seed));
+      renderHistory();
+    });
+    li.append(seed, meta, del);
     li.addEventListener('click', () => { seedInput.value = h.seed; typedSeed = true; $('play').click(); });
     ul.append(li);
   }

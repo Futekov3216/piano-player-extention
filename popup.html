@@ -126,9 +126,26 @@
         font-family: ui-monospace, monospace;
       }
       #history .meta {
+        flex: 1;
         color: #999;
         font-size: 11px;
         text-align: right;
+      }
+      #history button.delete {
+        flex: none;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1;
+        background: none;
+        color: #888;
+        cursor: pointer;
+        opacity: 1;
+      }
+      #history button.delete:hover {
+        background: #c0392b;
+        color: #fff;
       }
       #history .empty {
         color: #999;
