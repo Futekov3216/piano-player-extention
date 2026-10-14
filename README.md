@@ -4,6 +4,8 @@ A Chrome extension that composes original piano pieces and plays them on the vir
 
 Each piece is generated from a **seed**, which can be a number or any text. The same seed always produces the same piece, so you can replay a piece you liked or share its seed with someone else.
 
+Example here https://www.youtube.com/watch?v=cV8W8Yhrs88
+
 ## What it does
 
 From each seed the extension generates a piece of about 3 minutes in the style of Chopin:
