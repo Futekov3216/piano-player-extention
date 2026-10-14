@@ -5,9 +5,12 @@
   "description": "Generate and play seeded piano pieces on onlinepianist.com's virtual piano.",
   "permissions": ["scripting"],
   "host_permissions": ["https://www.onlinepianist.com/*", "https://onlinepianist.com/*"],
+  "minimum_chrome_version": "116",
   "action": {
-    "default_title": "Piano Player",
-    "default_popup": "popup.html"
+    "default_title": "Piano Player"
+  },
+  "background": {
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {

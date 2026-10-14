@@ -25,24 +25,27 @@ It plays the notes by sending key presses to the site's virtual piano, using all
 
 ## Usage
 
-1. Click the extension icon and press **Go to virtual piano**, or open https://www.onlinepianist.com/virtual-piano yourself.
+1. Click the extension icon. The player opens in its own small window, which stays open while you use Chrome. Press **Go to virtual piano**, or open https://www.onlinepianist.com/virtual-piano yourself.
 2. **Click any piano key once with your mouse.** Browsers keep a page silent until you interact with it, so the extension can't play anything until you do.
-3. Open the extension popup and press **Play**.
+3. Press **Play** in the player window.
 
-### The popup
+### The player window
+
+The player works on whichever tab is showing in your main Chrome window. Its buttons update as you switch tabs: on the piano page, Play and Stop are enabled and **Go to virtual piano** is disabled; on any other page it's the other way round.
 
 | Control | What it does |
 |---|---|
 | **Seed box** | Type a seed to play that exact piece. Leave it alone to get a random one. |
 | **Play** | Plays a new random seed each time. If you've typed a seed, plays that seed once, then goes back to random. Pressing Enter in the seed box does the same. |
 | **Stop** | Stops playback. |
-| **Go to virtual piano** | Opens the piano page in the current tab. |
+| **Go to virtual piano** | Opens the piano page in the current tab. Disabled when you're already on it. |
+| **×** (top right) | Closes the player window. Clicking the extension icon while it's open brings it to the front instead of opening a second one. |
 | **Reload page** | Only appears when the page needs a reload before it can play (see [Troubleshooting](#troubleshooting)). |
 | **Played seeds** | Expands a list of the seeds you've played, newest first, with each one's style, key and length. Click a seed to play it again. **Clear history** empties the list. |
 
-After you press Play, the popup shows the piece's seed, style, key, tempo, length, number of notes and how it ends.
+After you press Play, the player shows the piece's seed, style, key, tempo, length, number of notes and how it ends.
 
-The music keeps playing after the popup closes. Open the popup again to stop it.
+The music keeps playing if you close the player window. Click the extension icon again to stop it.
 
 ### Finding fast pieces
 
@@ -66,6 +69,7 @@ The extension applies this map every time the site loads, so **your own keybinds
 | Problem | Fix |
 |---|---|
 | Play does nothing, or there's no sound | Click a piano key on the page with your mouse, then press Play again. |
-| "Not on the piano page" | Press **Go to virtual piano**, or switch to the onlinepianist.com tab before opening the popup. |
+| Play and Stop are greyed out | The tab showing in your main Chrome window isn't onlinepianist.com. Press **Go to virtual piano**, or switch to the piano tab. |
+| The player window disappeared | It's behind your main Chrome window. Click the extension icon to bring it to the front. |
 | A message asks you to reload the page | The tab was open before the extension was installed or updated, so the site loaded its old keyboard settings. Press **Reload page** once. |
 | Wrong notes or missing keys | Reload the page so the site picks up the 88-key map. |

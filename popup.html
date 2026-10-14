@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <style>
       body {
-        width: 280px;
+        min-width: 280px;
         margin: 0;
         padding: 14px;
         font:
@@ -13,9 +13,29 @@
         background: #1d1b22;
         color: #eee;
       }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 10px;
+      }
       h1 {
         font-size: 15px;
-        margin: 0 0 10px;
+        margin: 0;
+      }
+      button#close {
+        flex: none;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        font-size: 18px;
+        line-height: 1;
+        background: none;
+        color: #aaa;
+      }
+      button#close:hover {
+        background: #c0392b;
+        color: #fff;
       }
       input {
         width: 100%;
@@ -44,6 +64,17 @@
       }
       button.secondary {
         background: #444;
+      }
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      body.off-site #history li:not(.empty) {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      body.off-site #history li:hover {
+        background: none;
       }
       button[hidden] {
         display: none;
@@ -115,7 +146,10 @@
     </style>
   </head>
   <body>
-    <h1>Piano Player</h1>
+    <header>
+      <h1>Piano Player</h1>
+      <button id="close" title="Close" aria-label="Close">&times;</button>
+    </header>
     <input id="seed" placeholder="Type a seed, or just press Play" autofocus />
     <div class="row">
       <button id="play">Play</button>

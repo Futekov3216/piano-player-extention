@@ -7,9 +7,18 @@ const show = (text, isError = false) => { status.textContent = text; status.clas
 // Random seed from Math.random mixed with the current time
 const randomSeed = () => (Math.floor(Math.random() * 1e9) ^ Date.now()) >>> 0;
 
+// tab.url is only visible on sites the extension has host permission for, so it's empty elsewhere
+const isPianoSite = tab => !!tab && /^https:\/\/(www\.)?onlinepianist\.com\//.test(tab.url || '');
+
+// The player runs in its own window, so "the current page" is the active tab of the last-focused browser window
+async function browserTab() {
+  const win = await chrome.windows.getLastFocused({ windowTypes: ['normal'], populate: true });
+  return win.tabs.find(t => t.active);
+}
+
 async function pianoTab() {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!tab || !/^https:\/\/(www\.)?onlinepianist\.com\//.test(tab.url || '')) {
+  const tab = await browserTab();
+  if (!isPianoSite(tab)) {
     throw new Error('Not on the piano page. Click "Go to virtual piano" first.');
   }
   return tab;
@@ -54,15 +63,16 @@ $('stop').addEventListener('click', async () => {
 });
 
 reloadBtn.addEventListener('click', async () => {
-  try { const tab = await pianoTab(); await chrome.tabs.reload(tab.id); window.close(); }
+  try { const tab = await pianoTab(); await chrome.tabs.reload(tab.id); reloadBtn.hidden = true; show('Page reloaded. Click a piano key, then press Play.'); }
   catch (e) { show(e.message, true); }
 });
 
 $('open').addEventListener('click', async () => {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const tab = await browserTab();
   await chrome.tabs.update(tab.id, { url: PIANO_URL });
-  window.close();
 });
+
+$('close').addEventListener('click', () => window.close());
 
 seedInput.addEventListener('keydown', e => { if (e.key === 'Enter') $('play').click(); });
 
@@ -108,3 +118,20 @@ function renderHistory() {
 
 $('clear-history').addEventListener('click', () => { saveHistory([]); renderHistory(); });
 renderHistory();
+
+// On the piano site only the playing controls work; anywhere else only "Go to virtual piano" does.
+// Re-checked whenever the user switches tab or window, or a tab navigates.
+const OFF_SITE_MSG = 'Open the virtual piano to play.';
+async function refreshSite() {
+  let onSite = false;
+  try { onSite = isPianoSite(await browserTab()); } catch {}
+  document.body.classList.toggle('off-site', !onSite);
+  $('play').disabled = $('stop').disabled = reloadBtn.disabled = !onSite;
+  $('open').disabled = onSite;
+  if (!onSite) show(OFF_SITE_MSG);
+  else if (status.textContent === OFF_SITE_MSG) show('');
+}
+chrome.tabs.onActivated.addListener(refreshSite);
+chrome.tabs.onUpdated.addListener((id, change) => { if (change.url || change.status) refreshSite(); });
+chrome.windows.onFocusChanged.addListener(refreshSite);
+refreshSite();
